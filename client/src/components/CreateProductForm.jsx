@@ -1,6 +1,43 @@
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function CreateProductForm() {
+  const [newProduct, setNewProduct] = useState({});
+  const navigate = useNavigate();
+
+  function addProductDetail(event) {
+    let copyNewProduct = { ...newProduct };
+
+    copyNewProduct[event.target.id] = event.target.value;
+
+    setNewProduct(copyNewProduct);
+
+    
+  }
+
+
+  async function addProduct(event)
+  {
+    event.preventDefault()
+    
+    await axios.post("http://localhost:4001/products",
+      {
+        "name": newProduct.name,
+        "price": newProduct.price,
+        "image":   newProduct.image,
+        "description": newProduct.description,
+    }
+    )
+
+    navigate("/")
+    
+    
+    
+  }
+
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={addProduct}>
       <h1>Create Product Form</h1>
       <div className="input-container">
         <label>
@@ -10,7 +47,10 @@ function CreateProductForm() {
             name="name"
             type="text"
             placeholder="Enter name here"
-            onChange={() => {}}
+            onChange={(event) => {
+              addProductDetail(event);
+            }}
+            value={newProduct.name}
           />
         </label>
       </div>
@@ -22,7 +62,10 @@ function CreateProductForm() {
             name="image"
             type="text"
             placeholder="Enter image url here"
-            onChange={() => {}}
+            onChange={(event) => {
+              addProductDetail(event);
+            }}
+            value={newProduct.image}
           />
         </label>
       </div>
@@ -34,7 +77,10 @@ function CreateProductForm() {
             name="price"
             type="number"
             placeholder="Enter price here"
-            onChange={() => {}}
+            onChange={(event) => {
+              addProductDetail(event);
+            }}
+            value={newProduct.price}
           />
         </label>
       </div>
@@ -46,7 +92,10 @@ function CreateProductForm() {
             name="description"
             type="text"
             placeholder="Enter description here"
-            onChange={() => {}}
+            onChange={(event) => {
+              addProductDetail(event);
+            }}
+            value={newProduct.description}
             rows={4}
             cols={30}
           />

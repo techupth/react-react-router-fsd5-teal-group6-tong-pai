@@ -1,12 +1,36 @@
+import axios from "axios";
+import { useParams,Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 function ViewProductPage() {
+
+  const params = useParams();
+  const [product, setProduct]= useState([])
+
+
+  useEffect(() => {
+    getPost();
+  }, []);
+
+  
+
+  async function getPost()
+  {
+    console.log(params);
+    
+   const results = await axios.get(`http://localhost:4001/products/${params.id}`)
+    setProduct(results.data.data)
+
+  }
+
   return (
     <div>
       <h1>View Product Page</h1>
       <div className="view-product-container">
-        <h2>Product Title</h2>
-        <p>Content</p>
+        <h2>{product.name}</h2>
+        <p>{product.description}</p>
       </div>
-      <button>Back to Home</button>
+      <Link to ="/"><button>Back to Home</button></Link>
     </div>
   );
 }
