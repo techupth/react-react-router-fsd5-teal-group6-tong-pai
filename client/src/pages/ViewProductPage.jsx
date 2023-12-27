@@ -16,9 +16,8 @@ function ViewProductPage() {
 
   async function getPost()
   {
-    console.log(params);
     
-   const results = await axios.get(`http://localhost:4001/products/${params.id}`)
+   const results = await axios.get(`http://localhost:4001/products/${params.productId}`)
     setProduct(results.data.data)
 
   }

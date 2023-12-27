@@ -48,7 +48,7 @@ function HomePage() {
                 <p>Product description: {product.description} </p>
                 <div className="product-actions">
                   <button className="view-button" onClick={() => {navigate("/product/view/"+product.id)}}>View</button>
-                  <button className="edit-button">Edit</button>
+                  <button className="edit-button" onClick={() => {navigate("/product/edit/"+product.id)}}>Edit</button>
                 </div>
               </div>
 
