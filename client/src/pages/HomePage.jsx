@@ -10,21 +10,31 @@ function HomePage() {
     try {
       setIsError(false);
       setIsLoading(true);
-      const results = await axios("http://localhost:4001/products");
+      const results = await axios.get("http://localhost:4001/products");
       setProducts(results.data.data);
       setIsLoading(false);
     } catch (error) {
       setIsError(true);
     }
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const deleteData = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4001/products/${id}`);
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleSubmit = () => {
     navigate("/product/create");
   };
   const handleView = (id) => {
     navigate(`/product/view/${id}`);
   };
+  const handleEdit = (id) => {
+    navigate(`/product/edit/${id}`);
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -59,11 +69,25 @@ function HomePage() {
                   >
                     View
                   </button>
-                  <button className="edit-button">Edit</button>
+                  <button
+                    onClick={() => {
+                      handleEdit(product.id);
+                    }}
+                    className="edit-button"
+                  >
+                    Edit
+                  </button>
                 </div>
               </div>
 
-              <button className="delete-button">x</button>
+              <button
+                onClick={() => {
+                  deleteData(product.id);
+                }}
+                className="delete-button"
+              >
+                x
+              </button>
             </div>
           );
         })}

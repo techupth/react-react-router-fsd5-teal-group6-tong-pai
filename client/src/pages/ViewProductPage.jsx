@@ -4,7 +4,7 @@ import axios from "axios";
 function ViewProductPage() {
   const [viewData, setViewData] = useState([]);
   const params = useParams();
-  console.log(params);
+  console.log(viewData);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +29,8 @@ function ViewProductPage() {
 
       <div className="view-product-container">
         <h2>Product Title : {viewData.name}</h2>
+        <img src={viewData.image} alt={viewData.name} />
+        <p>Price: {viewData.price}</p>
         <p>Content: {viewData.description}</p>
       </div>
 
